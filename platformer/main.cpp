@@ -25,8 +25,8 @@
 #include "LevelA.h"
 
 // ————— CONSTANTS ————— //
-constexpr int WINDOW_WIDTH  = 640,
-          WINDOW_HEIGHT = 480;
+constexpr int WINDOW_WIDTH  = 640 * 1.6,
+          WINDOW_HEIGHT = 480 * 1.6;
 
 constexpr float BG_RED     = 0.1922f,
             BG_BLUE    = 0.549f,

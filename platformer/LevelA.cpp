@@ -4,9 +4,9 @@
 #define LEVEL_WIDTH 14
 #define LEVEL_HEIGHT 8
 
-constexpr char SPRITESHEET_FILEPATH[] = "assets/george_0.png",
+constexpr char SPRITESHEET_FILEPATH[] = "assets/neo.png",
            PLATFORM_FILEPATH[]    = "assets/platformPack_tile027.png",
-           ENEMY_FILEPATH[]       = "assets/soph.png";
+           ENEMY_FILEPATH[]       = "assets/smith.png";
 
 unsigned int LEVEL_DATA[] =
 {
@@ -31,8 +31,8 @@ LevelA::~LevelA()
 
 void LevelA::initialise()
 {
-    GLuint map_texture_id = Utility::load_texture("assets/tileset.png");
-    m_game_state.map = new Map(LEVEL_WIDTH, LEVEL_HEIGHT, LEVEL_DATA, map_texture_id, 1.0f, 4, 1);
+    GLuint map_texture_id = Utility::load_texture("assets/Textures-16.png");
+    m_game_state.map = new Map(LEVEL_WIDTH, LEVEL_HEIGHT, LEVEL_DATA, map_texture_id, 1.0f, 30, 32);
     
     GLuint player_texture_id = Utility::load_texture(SPRITESHEET_FILEPATH);
 
@@ -55,8 +55,8 @@ void LevelA::initialise()
         0.0f,                      // animation time
         4,                         // animation frame amount
         0,                         // current animation index
-        4,                         // animation column amount
-        4,                         // animation row amount
+        1,                         // animation column amount
+        1,                         // animation row amount
         1.0f,                      // width
         1.0f,                       // height
         PLAYER
