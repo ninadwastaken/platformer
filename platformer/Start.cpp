@@ -91,7 +91,7 @@ void Start::initialise()
 
     m_game_state.bgm = Mix_LoadMUS("assets/dooblydoo.mp3");
     Mix_PlayMusic(m_game_state.bgm, -1);
-    Mix_VolumeMusic(0.0f);
+    Mix_VolumeMusic(MIX_MAX_VOLUME);
 
     m_game_state.jump_sfx = Mix_LoadWAV("assets/bounce.wav");
 }

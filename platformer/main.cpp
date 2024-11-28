@@ -135,6 +135,8 @@ void initialise()
     switch_to_scene(g_levels[0]);
 
     
+
+    
     
     // ————— BLENDING ————— //
     glEnable(GL_BLEND);
