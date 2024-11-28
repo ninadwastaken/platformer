@@ -54,10 +54,11 @@ LevelA* g_level_a;
 LevelB *g_level_b;
 LevelC* g_level_c;
 Start* g_start_screen;
+Start* g_win_screen;
 
 int player_lives = 3;
 
-Scene* g_levels[4];
+Scene* g_levels[5];
 
 SDL_Window* g_display_window;
 
@@ -122,11 +123,13 @@ void initialise()
     g_level_a = new LevelA();
     g_level_b = new LevelB();
     g_level_c = new LevelC();
+    g_win_screen = new Start();
 
     g_levels[0] = g_start_screen;
     g_levels[1] = g_level_a;
     g_levels[2] = g_level_b;
     g_levels[3] = g_level_c;
+    g_levels[4] = g_win_screen;
 
 
     switch_to_scene(g_levels[0]);
@@ -170,7 +173,7 @@ void process_input()
                          break;
 
                     case SDLK_RETURN:
-                        if (g_current_scene == g_start_screen) {
+                        if (g_current_scene == g_start_screen || g_current_scene == g_win_screen) {
                             switch_to_scene(g_level_a);
                      
                         }
@@ -235,7 +238,7 @@ void update()
         g_view_matrix = glm::translate(g_view_matrix, glm::vec3(-5, 3.75, 0));
     }
 }
-
+std::string text_to_write;
 void render()
 {
     g_shader_program.set_view_matrix(g_view_matrix);
@@ -244,12 +247,24 @@ void render()
     
     // ————— RENDERING THE SCENE (i.e. map, character, enemies...) ————— //
     g_current_scene->render(&g_shader_program);
+    if (player_lives <= 0) {
+        text_to_write = "you lose lol";
+    }
+    else if (g_current_scene == g_levels[4]) {
+        text_to_write = "you win wowie";
+    }
+    else {
+        text_to_write = "lives left: " + std::to_string(player_lives);
+    }
     
-    Utility::draw_text(&g_shader_program, "lives left: " + std::to_string(player_lives),
-        0.2f, 0.001f,
-        glm::vec3(g_current_scene->m_game_state.player->get_position().x - 2.0f, 
-            -0.5f,
-            0.0f));
+    if (g_current_scene != g_start_screen) {
+        Utility::draw_text(&g_shader_program, text_to_write,
+            0.2f, 0.001f,
+            glm::vec3(g_current_scene->m_game_state.player->get_position().x - 2.0f,
+                -0.5f,
+                0.0f));
+    }
+    
     SDL_GL_SwapWindow(g_display_window);
 }
 
