@@ -23,6 +23,7 @@
 #include "Utility.h"
 #include "Scene.h"
 #include "LevelA.h"
+#include "Start.h"
 
 // ————— CONSTANTS ————— //
 constexpr int WINDOW_WIDTH  = 640 * 1.6,
@@ -48,6 +49,7 @@ enum AppStatus { RUNNING, TERMINATED };
 // ————— GLOBAL VARIABLES ————— //
 Scene *g_current_scene;
 LevelA *g_level_a;
+Start* g_start_screen;
 
 SDL_Window* g_display_window;
 
@@ -109,7 +111,8 @@ void initialise()
     
     // ————— LEVEL A SETUP ————— //
     g_level_a = new LevelA();
-    switch_to_scene(g_level_a);
+    g_start_screen = new Start();
+    switch_to_scene(g_start_screen);
     
     // ————— BLENDING ————— //
     glEnable(GL_BLEND);
@@ -146,6 +149,13 @@ void process_input()
                             Mix_PlayChannel(-1,  g_current_scene->get_state().jump_sfx, 0);
                         }
                          break;
+
+                    case SDLK_RETURN:
+                        if (g_current_scene == g_start_screen) {
+                            switch_to_scene(g_level_a);
+                     
+                        }
+                        break;
                         
                     default:
                         break;

@@ -35,11 +35,13 @@ GLuint Utility::load_texture(const char* filepath) {
     return texture_id;
 }
 
-void Utility::draw_text(ShaderProgram *program, GLuint font_texture_id, std::string text, float screen_size, float spacing, glm::vec3 position)
+void Utility::draw_text(ShaderProgram *program, std::string text, float screen_size, float spacing, glm::vec3 position)
 {
     float width = 1.0f / FONTBANK_SIZE;
     float height = 1.0f / FONTBANK_SIZE;
-
+    char FONT_FILEPATH[] = "assets/font1.png";
+    GLuint font_texture_id = load_texture(FONT_FILEPATH);
+    
     
     std::vector<float> vertices;
     std::vector<float> texture_coordinates;
