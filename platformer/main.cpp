@@ -25,6 +25,7 @@
 #include "LevelA.h"
 #include "Start.h"
 #include "LevelB.h"
+#include "LevelC.h"
 
 // ————— CONSTANTS ————— //
 constexpr int WINDOW_WIDTH  = 640 * 1.6,
@@ -51,11 +52,12 @@ enum AppStatus { RUNNING, TERMINATED };
 Scene *g_current_scene;
 LevelA* g_level_a;
 LevelB *g_level_b;
+LevelC* g_level_c;
 Start* g_start_screen;
 
 int player_lives = 3;
 
-Scene* g_levels[3];
+Scene* g_levels[4];
 
 SDL_Window* g_display_window;
 
@@ -119,10 +121,12 @@ void initialise()
     g_start_screen = new Start();
     g_level_a = new LevelA();
     g_level_b = new LevelB();
+    g_level_c = new LevelC();
 
     g_levels[0] = g_start_screen;
     g_levels[1] = g_level_a;
     g_levels[2] = g_level_b;
+    g_levels[3] = g_level_c;
 
 
     switch_to_scene(g_levels[0]);

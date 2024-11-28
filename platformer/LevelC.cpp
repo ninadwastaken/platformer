@@ -1,4 +1,4 @@
-#include "LevelB.h"
+#include "LevelC.h"
 #include "Utility.h"
 
 #define LEVEL_WIDTH 14
@@ -8,7 +8,7 @@ constexpr char SPRITESHEET_FILEPATH[] = "assets/neo.png",
 PLATFORM_FILEPATH[] = "assets/platformPack_tile027.png",
 ENEMY_FILEPATH[] = "assets/smith.png";
 
-unsigned int LEVELB_DATA[] =
+unsigned int LEVELC_DATA[] =
 {
     3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -20,7 +20,7 @@ unsigned int LEVELB_DATA[] =
     3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
 };
 
-LevelB::~LevelB()
+LevelC::~LevelC()
 {
     delete[] m_game_state.enemies;
     delete    m_game_state.player;
@@ -29,11 +29,11 @@ LevelB::~LevelB()
     Mix_FreeMusic(m_game_state.bgm);
 }
 
-void LevelB::initialise()
+void LevelC::initialise()
 {
     m_game_state.next_scene_id = -1;
     GLuint map_texture_id = Utility::load_texture("assets/Textures-16.png");
-    m_game_state.map = new Map(LEVEL_WIDTH, LEVEL_HEIGHT, LEVELB_DATA, map_texture_id, 1.0f, 30, 32);
+    m_game_state.map = new Map(LEVEL_WIDTH, LEVEL_HEIGHT, LEVELC_DATA, map_texture_id, 1.0f, 30, 32);
 
     GLuint player_texture_id = Utility::load_texture(SPRITESHEET_FILEPATH);
 
@@ -96,7 +96,7 @@ void LevelB::initialise()
     m_game_state.jump_sfx = Mix_LoadWAV("assets/bounce.wav");
 }
 
-void LevelB::update(float delta_time)
+void LevelC::update(float delta_time)
 {
     m_game_state.player->update(delta_time, m_game_state.player, m_game_state.enemies, ENEMY_COUNT, m_game_state.map);
 
@@ -104,14 +104,10 @@ void LevelB::update(float delta_time)
     {
         m_game_state.enemies[i].update(delta_time, m_game_state.player, NULL, NULL, m_game_state.map);
     }
-
-    if (m_game_state.player->get_position().y < -10.0f) {
-        m_game_state.next_scene_id = 3;
-    }
 }
 
 
-void LevelB::render(ShaderProgram* g_shader_program)
+void LevelC::render(ShaderProgram* g_shader_program)
 {
     m_game_state.map->render(g_shader_program);
     m_game_state.player->render(g_shader_program);
