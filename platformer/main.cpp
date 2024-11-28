@@ -219,6 +219,11 @@ void update()
     }
     
     g_accumulator = delta_time;
+
+    if (!g_current_scene->m_game_state.player->get_is_active()) {
+        player_lives--;
+        switch_to_scene(g_current_scene);
+    }
     
     
     // ————— PLAYER CAMERA ————— //
@@ -240,6 +245,11 @@ void render()
     // ————— RENDERING THE SCENE (i.e. map, character, enemies...) ————— //
     g_current_scene->render(&g_shader_program);
     
+    Utility::draw_text(&g_shader_program, "lives left: " + std::to_string(player_lives),
+        0.2f, 0.001f,
+        glm::vec3(g_current_scene->m_game_state.player->get_position().x - 2.0f, 
+            -0.5f,
+            0.0f));
     SDL_GL_SwapWindow(g_display_window);
 }
 
@@ -268,6 +278,7 @@ int main(int argc, char* argv[])
 
         render();
     }
+
     
     shutdown();
     return 0;

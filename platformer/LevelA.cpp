@@ -119,4 +119,6 @@ void LevelA::render(ShaderProgram *g_shader_program)
     m_game_state.player->render(g_shader_program);
     for (int i = 0; i < m_number_of_enemies; i++)
             m_game_state.enemies[i].render(g_shader_program);
+
+
 }

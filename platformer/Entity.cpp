@@ -334,10 +334,16 @@ void Entity::update(float delta_time, Entity *player, Entity *collidable_entitie
     m_position.y += m_velocity.y * delta_time;
     
     check_collision_y(collidable_entities, collidable_entity_count);
+    if ((m_entity_type == PLAYER) && (m_collided_top || m_collided_bottom)) {
+        deactivate();
+    }
     check_collision_y(map);
     
     m_position.x += m_velocity.x * delta_time;
     check_collision_x(collidable_entities, collidable_entity_count);
+    if ((m_entity_type == PLAYER) && (m_collided_left || m_collided_right)) {
+        deactivate();
+    }
     check_collision_x(map);
     
     m_model_matrix = glm::mat4(1.0f);
