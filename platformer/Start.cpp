@@ -62,7 +62,7 @@ void Start::initialise()
         PLAYER
     );
 
-    m_game_state.player->set_position(glm::vec3(5.0f, 0.0f, 0.0f));
+    m_game_state.player->set_position(glm::vec3(5.0f, -2.0f, 0.0f));
 
     // Jumping
     m_game_state.player->set_jumping_power(3.0f);
@@ -97,7 +97,7 @@ void Start::initialise()
 
 void Start::update(float delta_time)
 {
-    m_game_state.player->update(delta_time, m_game_state.player, m_game_state.enemies, ENEMY_COUNT, m_game_state.map);
+    //m_game_state.player->update(delta_time, m_game_state.player, m_game_state.enemies, ENEMY_COUNT, m_game_state.map);
 
     for (int i = 0; i < ENEMY_COUNT; i++)
     {
@@ -109,9 +109,9 @@ void Start::update(float delta_time)
 void Start::render(ShaderProgram* g_shader_program)
 {
     m_game_state.map->render(g_shader_program);
-    m_game_state.player->render(g_shader_program);
-    for (int i = 0; i < m_number_of_enemies; i++)
-        m_game_state.enemies[i].render(g_shader_program);
+    ////m_game_state.player->render(g_shader_program);
+    //for (int i = 0; i < m_number_of_enemies; i++)
+    //    m_game_state.enemies[i].render(g_shader_program);
 
     Utility::draw_text(g_shader_program, "press enter to begin", 0.3f, 0.001f,
             glm::vec3(m_game_state.player->get_position().x - 3.5f, m_game_state.player->get_position().y, 0.0f));
