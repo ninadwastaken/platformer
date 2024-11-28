@@ -24,6 +24,7 @@
 #include "Scene.h"
 #include "LevelA.h"
 #include "Start.h"
+#include "LevelB.h"
 
 // ————— CONSTANTS ————— //
 constexpr int WINDOW_WIDTH  = 640 * 1.6,
@@ -48,8 +49,13 @@ enum AppStatus { RUNNING, TERMINATED };
 
 // ————— GLOBAL VARIABLES ————— //
 Scene *g_current_scene;
-LevelA *g_level_a;
+LevelA* g_level_a;
+LevelB *g_level_b;
 Start* g_start_screen;
+
+int player_lives = 3;
+
+Scene* g_levels[3];
 
 SDL_Window* g_display_window;
 
@@ -110,9 +116,18 @@ void initialise()
     
     
     // ————— LEVEL A SETUP ————— //
-    g_level_a = new LevelA();
     g_start_screen = new Start();
-    switch_to_scene(g_start_screen);
+    g_level_a = new LevelA();
+    g_level_b = new LevelB();
+
+    g_levels[0] = g_start_screen;
+    g_levels[1] = g_level_a;
+    g_levels[2] = g_level_b;
+
+
+    switch_to_scene(g_levels[0]);
+
+    
     
     // ————— BLENDING ————— //
     glEnable(GL_BLEND);
@@ -241,6 +256,12 @@ int main(int argc, char* argv[])
     {
         process_input();
         update();
+
+        if (g_current_scene->m_game_state.next_scene_id >= 0) {
+            switch_to_scene(g_levels[g_current_scene->m_game_state.next_scene_id]);
+
+        }
+
         render();
     }
     

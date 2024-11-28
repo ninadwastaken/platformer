@@ -31,6 +31,8 @@ LevelA::~LevelA()
 
 void LevelA::initialise()
 {
+        
+    m_game_state.next_scene_id = -1;
     GLuint map_texture_id = Utility::load_texture("assets/Textures-16.png");
     m_game_state.map = new Map(LEVEL_WIDTH, LEVEL_HEIGHT, LEVEL_DATA, map_texture_id, 1.0f, 30, 32);
     
@@ -103,6 +105,11 @@ void LevelA::update(float delta_time)
     {
         m_game_state.enemies[i].update(delta_time, m_game_state.player, NULL, NULL, m_game_state.map);
     }
+
+    if (m_game_state.player->get_position().y < -10.0f) {
+        m_game_state.next_scene_id = 2;
+    }
+
 }
 
 

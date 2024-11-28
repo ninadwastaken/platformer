@@ -1,4 +1,4 @@
-#include "Start.h"
+#include "LevelB.h"
 #include "Utility.h"
 
 #define LEVEL_WIDTH 14
@@ -8,7 +8,7 @@ constexpr char SPRITESHEET_FILEPATH[] = "assets/neo.png",
 PLATFORM_FILEPATH[] = "assets/platformPack_tile027.png",
 ENEMY_FILEPATH[] = "assets/smith.png";
 
-unsigned int START_DATA[] =
+unsigned int LEVELB_DATA[] =
 {
     3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -20,7 +20,7 @@ unsigned int START_DATA[] =
     3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
 };
 
-Start::~Start()
+LevelB::~LevelB()
 {
     delete[] m_game_state.enemies;
     delete    m_game_state.player;
@@ -29,11 +29,11 @@ Start::~Start()
     Mix_FreeMusic(m_game_state.bgm);
 }
 
-void Start::initialise()
+void LevelB::initialise()
 {
     m_game_state.next_scene_id = -1;
     GLuint map_texture_id = Utility::load_texture("assets/Textures-16.png");
-    m_game_state.map = new Map(LEVEL_WIDTH, LEVEL_HEIGHT, START_DATA, map_texture_id, 1.0f, 30, 32);
+    m_game_state.map = new Map(LEVEL_WIDTH, LEVEL_HEIGHT, LEVELB_DATA, map_texture_id, 1.0f, 30, 32);
 
     GLuint player_texture_id = Utility::load_texture(SPRITESHEET_FILEPATH);
 
@@ -63,7 +63,7 @@ void Start::initialise()
         PLAYER
     );
 
-    m_game_state.player->set_position(glm::vec3(5.0f, -2.0f, 0.0f));
+    m_game_state.player->set_position(glm::vec3(5.0f, 0.0f, 0.0f));
 
     // Jumping
     m_game_state.player->set_jumping_power(3.0f);
@@ -96,9 +96,9 @@ void Start::initialise()
     m_game_state.jump_sfx = Mix_LoadWAV("assets/bounce.wav");
 }
 
-void Start::update(float delta_time)
+void LevelB::update(float delta_time)
 {
-    //m_game_state.player->update(delta_time, m_game_state.player, m_game_state.enemies, ENEMY_COUNT, m_game_state.map);
+    m_game_state.player->update(delta_time, m_game_state.player, m_game_state.enemies, ENEMY_COUNT, m_game_state.map);
 
     for (int i = 0; i < ENEMY_COUNT; i++)
     {
@@ -107,13 +107,10 @@ void Start::update(float delta_time)
 }
 
 
-void Start::render(ShaderProgram* g_shader_program)
+void LevelB::render(ShaderProgram* g_shader_program)
 {
     m_game_state.map->render(g_shader_program);
-    ////m_game_state.player->render(g_shader_program);
-    //for (int i = 0; i < m_number_of_enemies; i++)
-    //    m_game_state.enemies[i].render(g_shader_program);
-
-    Utility::draw_text(g_shader_program, "press enter to begin", 0.3f, 0.001f,
-            glm::vec3(m_game_state.player->get_position().x - 3.5f, m_game_state.player->get_position().y, 0.0f));
+    m_game_state.player->render(g_shader_program);
+    for (int i = 0; i < m_number_of_enemies; i++)
+        m_game_state.enemies[i].render(g_shader_program);
 }
