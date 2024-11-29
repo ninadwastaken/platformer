@@ -86,7 +86,16 @@ void initialise()
 {
     // ————— VIDEO ————— //
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
-    g_display_window = SDL_CreateWindow("Hello, Scenes!",
+    /**
+     BGM and SFX
+     */
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
+
+    auto bgm = Mix_LoadMUS("assets/bgm.wav");
+    Mix_PlayMusic(bgm, -1);
+    Mix_VolumeMusic(0);
+
+    g_display_window = SDL_CreateWindow("matrix platformer",
                                       SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                                       WINDOW_WIDTH, WINDOW_HEIGHT,
                                       SDL_WINDOW_OPENGL);

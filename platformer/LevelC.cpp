@@ -66,7 +66,7 @@ void LevelC::initialise()
     m_game_state.player->set_position(glm::vec3(5.0f, 0.0f, 0.0f));
 
     // Jumping
-    m_game_state.player->set_jumping_power(4.0f);
+    m_game_state.player->set_jumping_power(5.0f);
 
     /**
      Enemies' stuff */
